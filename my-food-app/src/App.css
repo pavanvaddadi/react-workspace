@@ -1,0 +1,46 @@
+.avatar {
+  height: 50px;
+  width: 50px;
+  margin-top: 10px;
+}
+
+.my-card {
+  height: 200px;
+  width: 100%;
+}
+
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 5px;
+}
+
+.res-card {
+  border: 1px solid #ddd;
+  padding:  5px;
+  width: 20%;
+  margin: 5px;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.header-container {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid #ddd;
+  background: #ddd;
+
+  & ul {
+    list-style: none;
+    display: flex;
+    font-size: 16px;
+    & li {
+      padding: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}
