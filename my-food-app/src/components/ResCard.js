@@ -16,7 +16,7 @@ export function ResCard(data) {
         <h5>{name}</h5>
         <div>{costForTwo}</div>
         <div>Rating: {avgRating}</div>
-        <div>{data.resData.sla.slaString}</div>
+        <div>Delivery: {data.resData.sla.slaString}</div>
       </div>
     </div>
   );
