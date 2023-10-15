@@ -9,11 +9,16 @@ function Body() {
   // then DOM manipulation is going to happen
 
   let [listOfRes, setListOfRes] = useState([]);
+  let [filteredRes, setFilteredRes] = useState([]);
+  let [searchKey, setSearchKey] = useState("");
+
   const filterData = () => {
-    listOfRes = listOfRes.filter((eachRes) => {
-      return eachRes.info.avgRating >= 4.2;
-    });
-    setListOfRes(listOfRes);
+    filteredRes = listOfRes
+      .filter((eachRes) => {
+        return eachRes.info.avgRating >= 4.2;
+      })
+      .sort((a, b) => b.info.avgRating - a.info.avgRating);
+    setFilteredRes(filteredRes);
   };
 
   useEffect(() => {
@@ -28,22 +33,46 @@ function Body() {
     setListOfRes(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    setFilteredRes(
+      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
   if (listOfRes.length === 0) {
     return <Shimmer />;
   }
 
+  const onTextChange = (e) => {
+    setSearchKey(e.target.value);
+  };
+  const onSearch = () => {
+    filteredRes = listOfRes.filter((eachRes) => {
+      return eachRes.info.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    setFilteredRes(filteredRes);
+  };
+
   return (
     <div>
-      <div className="searchBox">
+      <div className="filter">
+        <div className="searchBox">
+          <input
+            type="text"
+            className="search-box"
+            value={searchKey}
+            onChange={onTextChange}
+          />
+          <button className="btn" onClick={onSearch}>
+            Search
+          </button>
+        </div>
         <button className="btn" onClick={filterData}>
           Top Rated Restaurants
         </button>
       </div>
       <div className="card-container">
         <div className="res-container">
-          {listOfRes.map((eachRes) => {
+          {filteredRes.map((eachRes) => {
             return <ResCard key={eachRes.info.id} resData={eachRes.info} />;
           })}
         </div>
