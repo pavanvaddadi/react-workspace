@@ -1,5 +1,6 @@
 import { LOGO_URL } from "../utils/constants";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function Header() {
   let [btnState, setBtnState] = useState("Login");
@@ -13,8 +14,16 @@ export function Header() {
       </div>
       <div className="nav-links">
         <ul>
-          <li>HOME</li>
-          <li>ABOUT</li>
+          <li>
+            <Link to="/">HOME</Link>
+          </li>
+          <li>
+            {" "}
+            <Link to="/about">ABOUT</Link>
+          </li>
+          <li>
+            <Link to="/contact">CONTACT</Link>
+          </li>
           <li>CART</li>
           <button onClick={changeUserStatus}>{btnState}</button>
         </ul>

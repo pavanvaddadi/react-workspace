@@ -18,8 +18,8 @@
 .res-card {
   border: 1px solid #ddd;
   padding: 5px;
-  width: 18%;
   margin: 5px;
+  height: 350px;
 }
 
 .nav-links {
@@ -68,5 +68,17 @@
   .btn {
     cursor: pointer;
     margin-left: 2px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.desc {
+  & h5 {
+    max-width: 150px !important;
+    word-wrap: break-word !important;
   }
 }

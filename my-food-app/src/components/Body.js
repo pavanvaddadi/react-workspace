@@ -1,6 +1,7 @@
 import { ResCard } from "./ResCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom"
 
 function Body() {
   // use State is have special varible which returns an array
@@ -73,7 +74,12 @@ function Body() {
       <div className="card-container">
         <div className="res-container">
           {filteredRes.map((eachRes) => {
-            return <ResCard key={eachRes.info.id} resData={eachRes.info} />;
+            return(
+            <Link key={eachRes.info.id} to={`restaurant/${eachRes.info.id}`}>
+            <ResCard resData={eachRes.info} />
+            </Link>
+            )
+            ;
           })}
         </div>
       </div>
