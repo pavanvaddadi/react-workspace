@@ -1,9 +1,11 @@
 import { LOGO_URL } from "../utils/constants";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 export function Header() {
   let [btnState, setBtnState] = useState("Login");
+  let onlineStatus = useOnlineStatus();
   function changeUserStatus() {
     btnState === "Login" ? setBtnState("Logout") : setBtnState("Login");
   }
@@ -14,8 +16,12 @@ export function Header() {
       </div>
       <div className="nav-links">
         <ul>
+          <li>App Status: {onlineStatus ? "online" : "offline"}</li>
           <li>
             <Link to="/">HOME</Link>
+          </li>
+          <li>
+            <Link to="/grocery">Grocery</Link>
           </li>
           <li>
             {" "}

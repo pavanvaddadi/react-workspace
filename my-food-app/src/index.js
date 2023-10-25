@@ -1,36 +1,49 @@
 import reportWebVitals from "./reportWebVitals";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import About from "./components/About";
 import Error from "./components/Error";
 import Contact from "./components/Contact";
-import Body  from "./components/Body"
+import Body from "./components/Body";
 import RestaurantMenu from "./components/RestaurantMenu";
 
+const Grocery = lazy(() => import("./components/Grocery"));
+const About = lazy(() => import("./components/About"));
 const routerConfig = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       {
-        path: '/',
-        element: <Body/>
+        path: "/",
+        element: <Body />,
       },
       {
         path: "/about",
-        element: <About />,
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <About />
+          </Suspense>
+        ),
       },
       {
         path: "/contact",
         element: <Contact />,
       },
       {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
+      },
+      {
         path: "restaurant/:id",
-        element: <RestaurantMenu/>
-      }
+        element: <RestaurantMenu />,
+      },
     ],
     errorElement: <Error />,
   },
