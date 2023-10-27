@@ -20,21 +20,26 @@ const RestaurantMenu = () => {
     );
 
   if (resturantData === null) return <Shimmer />;
-
-  const { name, avgRatingString, costForTwoMessage } =
+console.warn(resturantData?.data.cards[0]?.card?.card?.info)
+  const { name, avgRatingString, costForTwoMessage , totalRatingsString } =
     resturantData?.data.cards[0]?.card?.card?.info;
 
   return (
     <div className=" bg-gray-100">
       <div className="w-8/12 m-auto p-5">
         <div className="flex items-center  justify-between">
+          <div>
           <h2 className="font-bold  text-lg">{name}</h2>
+          <div className="font-bold text-gray-500 text-sm">
+            {costForTwoMessage}
+            </div>
+          </div>
           <div className="border p-2 rounded-md">
             <h4 className="font-semibold text-center border-b-2  border-b-blue-100">
               {avgRatingString} <span className="text-green-900"> ★</span>
             </h4>
             <h4 className="font-bold text-gray-500 text-xs">
-              {costForTwoMessage}{" "}
+              {totalRatingsString}
             </h4>
           </div>
         </div>
