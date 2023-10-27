@@ -1,7 +1,7 @@
-import { ResCard } from "./ResCard";
+import { ResCard, withDiscount } from "./ResCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function Body() {
   // use State is have special varible which returns an array
@@ -12,6 +12,8 @@ function Body() {
   let [listOfRes, setListOfRes] = useState([]);
   let [filteredRes, setFilteredRes] = useState([]);
   let [searchKey, setSearchKey] = useState("");
+
+  const ResCardWithDiscount = withDiscount(ResCard);
 
   const filterData = () => {
     filteredRes = listOfRes
@@ -31,13 +33,17 @@ function Body() {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await response.json();
+
     setListOfRes(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+
     setFilteredRes(
       json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+
+  console.warn(filteredRes);
 
   if (listOfRes.length === 0) {
     return <Shimmer />;
@@ -54,32 +60,45 @@ function Body() {
   };
 
   return (
-    <div>
-      <div className="filter">
-        <div className="searchBox">
+    <div className="p-4 bg-slate-50">
+      <div className="flex items-center m-4">
+        <div className="flex">
           <input
             type="text"
-            className="search-box"
+            className="border-2 pr-4"
             value={searchKey}
             onChange={onTextChange}
           />
-          <button className="btn" onClick={onSearch}>
+          <button
+            className="bg-blue-900 text-white p-2 mx-2 rounded-md"
+            onClick={onSearch}
+          >
             Search
           </button>
         </div>
-        <button className="btn" onClick={filterData}>
+        <button
+          className="btn bg-gray-200 p-2 mr-2 rounded-md"
+          onClick={filterData}
+        >
           Top Rated Restaurants
         </button>
       </div>
-      <div className="card-container">
-        <div className="res-container">
+      <div className="flex">
+        <div className="flex flex-wrap">
           {filteredRes.map((eachRes) => {
-            return(
-            <Link key={eachRes.info.id} to={`restaurant/${eachRes.info.id}`}>
-            <ResCard resData={eachRes.info} />
-            </Link>
-            )
-            ;
+            return (
+              <Link
+                key={eachRes.info.id}
+                to={`restaurant/${eachRes.info.id}`}
+                className="m-2 bg-gray-50 rounded-md"
+              >
+                {eachRes.info?.aggregatedDiscountInfoV3 !== undefined ? (
+                  <ResCardWithDiscount resData={eachRes.info} />
+                ) : (
+                  <ResCard resData={eachRes.info} />
+                )}
+              </Link>
+            );
           })}
         </div>
       </div>
