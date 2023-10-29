@@ -1,11 +1,8 @@
-import { useState } from "react";
 import ResItem from "./ResItem";
 
 const ResCategory = (categoryItems) => {
-  const [collapseItem, setCollapseItem] = useState(false);
-
   const onCollpase = () => {
-    setCollapseItem(!collapseItem);
+    categoryItems?.onExpand();
   };
   return (
     <div className="bg-white rounded-sm">
@@ -15,19 +12,19 @@ const ResCategory = (categoryItems) => {
           <button onClick={onCollpase}>↓</button>
         </div>
       </div>
-      {collapseItem ? (
-        <ul>
-          {categoryItems?.items?.card?.itemCards?.map((item) => {
-            return (
-              <li key={item.card.info.id}>
-                <ResItem item={item.card.info}></ResItem>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <></>
-      )}
+      <div>
+        {categoryItems.showItems && (
+          <div>
+            {categoryItems?.items?.card?.itemCards?.map((item) => {
+              return (
+                <div key={item.card.info.id}>
+                  <ResItem item={item.card.info}></ResItem>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -43,9 +43,7 @@ function Body() {
     );
   };
 
-  console.warn(filteredRes);
-
-  if (listOfRes.length === 0) {
+  if (filteredRes.length === 0) {
     return <Shimmer />;
   }
 

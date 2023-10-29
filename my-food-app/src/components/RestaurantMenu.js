@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import Shimmer from "./Shimmer";
 
@@ -7,7 +7,9 @@ import ResCategory from "./ResCategory";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
+
   const resturantData = useRestaurantMenu(id);
+  const [expandItem, setExpandItem] = useState(null);
 
   const itemCategories =
     resturantData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
@@ -20,8 +22,8 @@ const RestaurantMenu = () => {
     );
 
   if (resturantData === null) return <Shimmer />;
-console.warn(resturantData?.data.cards[0]?.card?.card?.info)
-  const { name, avgRatingString, costForTwoMessage , totalRatingsString } =
+
+  const { name, avgRatingString, costForTwoMessage, totalRatingsString } =
     resturantData?.data.cards[0]?.card?.card?.info;
 
   return (
@@ -29,9 +31,9 @@ console.warn(resturantData?.data.cards[0]?.card?.card?.info)
       <div className="w-8/12 m-auto p-5">
         <div className="flex items-center  justify-between">
           <div>
-          <h2 className="font-bold  text-lg">{name}</h2>
-          <div className="font-bold text-gray-500 text-sm">
-            {costForTwoMessage}
+            <h2 className="font-bold  text-lg">{name}</h2>
+            <div className="font-bold text-gray-500 text-sm">
+              {costForTwoMessage}
             </div>
           </div>
           <div className="border p-2 rounded-md">
@@ -43,15 +45,19 @@ console.warn(resturantData?.data.cards[0]?.card?.card?.info)
             </h4>
           </div>
         </div>
-        <ul>
-          {itemCategories?.map((eachCard) => {
+        <div>
+          {itemCategories?.map((eachCard, index) => {
             return (
-              <li key={eachCard.card?.card?.title}>
-                <ResCategory items={eachCard.card}></ResCategory>
-              </li>
+              <div key={eachCard.card?.card?.title}>
+                <ResCategory
+                  items={eachCard.card}
+                  showItems={index === expandItem ? true : false}
+                  onExpand={() => setExpandItem(index)}
+                />
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
     </div>
   );
