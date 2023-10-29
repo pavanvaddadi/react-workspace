@@ -17,7 +17,7 @@ function App() {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loggedInUser: userName }}>
+    <AuthContext.Provider value={{ loggedInUser: userName, setUserName }}>
       <div className="App">
         <header className="App-header">
           <Header />

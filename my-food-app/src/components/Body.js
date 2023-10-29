@@ -1,7 +1,8 @@
 import { ResCard, withDiscount } from "./ResCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import AuthContext from "../utils/AuthContext";
 
 function Body() {
   // use State is have special varible which returns an array
@@ -13,7 +14,13 @@ function Body() {
   let [filteredRes, setFilteredRes] = useState([]);
   let [searchKey, setSearchKey] = useState("");
 
+  const { loggedInUser, setUserName } = useContext(AuthContext);
+
   const ResCardWithDiscount = withDiscount(ResCard);
+
+  const onUserNameChanged = (value) => {
+    setUserName(value);
+  };
 
   const filterData = () => {
     filteredRes = listOfRes
@@ -73,6 +80,12 @@ function Body() {
           >
             Search
           </button>
+          <input
+            type="text"
+            className="border-2 pr-4"
+            value={loggedInUser.userName}
+            onChange={(e) => onUserNameChanged(e.target.value)}
+          />
         </div>
         <button
           className="btn bg-gray-200 p-2 mr-2 rounded-md"
