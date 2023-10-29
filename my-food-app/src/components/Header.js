@@ -1,12 +1,13 @@
 import { LOGO_URL } from "../utils/constants";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import AuthContext from "../utils/AuthContext";
 
 export function Header() {
-
   let [btnState, setBtnState] = useState("Login");
   let onlineStatus = useOnlineStatus();
+  let userInfo = useContext(AuthContext);
 
   function changeUserStatus() {
     btnState === "Login" ? setBtnState("Logout") : setBtnState("Login");
@@ -33,9 +34,14 @@ export function Header() {
           <li className="px-3 cursor-pointer hover:bg-black rounded-md">
             <Link to="/contact">CONTACT</Link>
           </li>
-          <li className="px-3 cursor-pointer hover:bg-black rounded-md">CART</li>
           <li className="px-3 cursor-pointer hover:bg-black rounded-md">
-          <button onClick={changeUserStatus}>{btnState}</button>
+            CART
+          </li>
+          <li className="px-3 cursor-pointer hover:bg-black rounded-md">
+            {userInfo.loggedInUser}
+          </li>
+          <li className="px-3 cursor-pointer hover:bg-black rounded-md">
+            <button onClick={changeUserStatus}>{btnState}</button>
           </li>
         </ul>
       </div>

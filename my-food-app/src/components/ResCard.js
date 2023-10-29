@@ -1,6 +1,10 @@
 import { CDN_URL } from "../utils/constants";
+import { useContext } from "react";
+import AuthContext from "../utils/AuthContext";
 
 export function ResCard(data) {
+  const userInfo = useContext(AuthContext);
+
   const { name, costForTwo, avgRating, cloudinaryImageId } = {
     ...data.resData,
   };
@@ -18,6 +22,7 @@ export function ResCard(data) {
         <div className="py-1">{costForTwo}</div>
         <div className="py-1">Rating: {avgRating}</div>
         <div className="py-1">Delivery: {data.resData.sla.slaString}</div>
+        <div className="py-1">user: {userInfo.loggedInUser}</div>
       </div>
     </div>
   );
